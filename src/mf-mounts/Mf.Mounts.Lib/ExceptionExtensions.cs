@@ -1,5 +1,9 @@
+using System.Diagnostics.CodeAnalysis;
+
 namespace Mf.Mounts.Lib;
 
+[SuppressMessage("ReSharper", "UnusedType.Global")]
+[SuppressMessage("ReSharper", "UnusedMember.Global")]
 public static class ExceptionExtensions
 {
 	public static void Exit(this Exception ex)
