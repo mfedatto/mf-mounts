@@ -1,4 +1,5 @@
 using System.Diagnostics.CodeAnalysis;
+using Mf.Mounts.Domain.AppSettings;
 using Mf.Mounts.Domain.Runtime;
 
 namespace Mf.Mounts.Services;
@@ -7,11 +8,14 @@ namespace Mf.Mounts.Services;
 public class RuntimeInformationService : IRuntimeInformationService
 {
 	private readonly IRuntimeInformationIO _service;
+	private readonly ElevatedRightsInfoConfig _elevatedRightsInfoConfig;
 
 	public RuntimeInformationService(
-		IRuntimeInformationIO service)
+		IRuntimeInformationIO service,
+		ElevatedRightsInfoConfig elevatedRightsInfoConfig)
 	{
 		_service = service;
+		_elevatedRightsInfoConfig = elevatedRightsInfoConfig;
 	}
 	
 	private bool? _isElevatedUser;
@@ -82,9 +86,9 @@ public class RuntimeInformationService : IRuntimeInformationService
 		bool? isElevatedUser = GetIsElevatedUser();
 
 		return isElevatedUser is null
-			? "unknown if elevated or not"
+			? _elevatedRightsInfoConfig.UnknownIfElevatedOrNotIndication
 			: isElevatedUser.Value
-				? "elevated"
-				: "";
+				? _elevatedRightsInfoConfig.ElevatedIndication
+				: _elevatedRightsInfoConfig.Indication;
 	}
 }

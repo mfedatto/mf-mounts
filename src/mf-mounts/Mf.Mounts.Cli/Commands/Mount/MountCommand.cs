@@ -8,12 +8,12 @@ namespace Mf.Mounts.Cli.Commands.Mount;
 [SuppressMessage("ReSharper", "UnusedType.Global")]
 public class MountCommand : ICommand<MountCommand.ParamSet>
 {
-	private readonly IRuntimeInformationService _service;
+	private readonly IRuntimeInformationService _runtimeInfoService;
 
 	public MountCommand(
-		IRuntimeInformationService service)
+		IRuntimeInformationService runtimeInfoService)
 	{
-		_service = service;
+		_runtimeInfoService = runtimeInfoService;
 	}
 
 	public string? Name => null;
@@ -22,7 +22,7 @@ public class MountCommand : ICommand<MountCommand.ParamSet>
 		ParamSet options)
 	{
 		Console.WriteLine($"Input: {options.MountsFilePath}");
-		Console.WriteLine($"Command line: {_service.GetCommandLine()}");
+		Console.WriteLine($"Command line: {_runtimeInfoService.GetCommandLine()}");
 	}
 
 	[SuppressMessage("ReSharper", "NotAccessedPositionalProperty.Global")]

@@ -1,4 +1,6 @@
 using Cocona.Builder;
+using Mf.Mounts.CrossCutting.CompositionRoot.Extensions;
+using Mf.Mounts.Domain.AppSettings;
 using Mf.Mounts.Domain.Runtime;
 using Mf.Mounts.Services;
 using Microsoft.Extensions.Configuration;
@@ -12,8 +14,7 @@ public class ServicesContextBuilder : IContextBuilderInstaller, IContextBuilderC
 		CoconaAppBuilder builder,
 		IConfiguration configuration)
 	{
-		//builder.BindConfig<DatabaseConfig>(configuration);
-		//builder.BindConfig<TelemetryConfig>(configuration);
+		builder.BindConfig<ElevatedRightsInfoConfig>(configuration);
 	}
 
 	public void Install(CoconaAppBuilder builder)

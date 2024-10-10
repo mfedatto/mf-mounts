@@ -1,4 +1,6 @@
 using Cocona.Builder;
+using Mf.Mounts.CrossCutting.CompositionRoot.Extensions;
+using Mf.Mounts.Domain.AppSettings;
 using Mf.Mounts.Domain.Runtime;
 using Mf.Mounts.IO;
 using Mf.Mounts.Services;
@@ -14,8 +16,6 @@ public class IOContextBuilder : IContextBuilderInstaller, IContextBuilderConfigB
 		CoconaAppBuilder builder,
 		IConfiguration configuration)
 	{
-		//builder.BindConfig<DatabaseConfig>(configuration);
-		//builder.BindConfig<TelemetryConfig>(configuration);
 	}
 
 	public void Install(CoconaAppBuilder builder)
