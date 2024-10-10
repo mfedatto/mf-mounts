@@ -5,6 +5,7 @@ using Mf.Mounts.Domain.Runtime;
 namespace Mf.Mounts.Cli.Commands.Mount;
 
 [SuppressMessage("ReSharper", "ConvertToPrimaryConstructor")]
+[SuppressMessage("ReSharper", "UnusedType.Global")]
 public class MountCommand : ICommand<MountCommand.ParamSet>
 {
 	private readonly IRuntimeInformationService _service;

@@ -12,6 +12,7 @@
 
     <ItemGroup>
         <ProjectReference Include="..\Mf.Mounts.Domain\Mf.Mounts.Domain.csproj"/>
+        <ProjectReference Include="..\Mf.Mounts.IO\Mf.Mounts.IO.csproj" />
         <ProjectReference Include="..\Mf.Mounts.Services\Mf.Mounts.Services.csproj"/>
     </ItemGroup>
 

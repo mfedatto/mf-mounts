@@ -1,12 +1,19 @@
-using System.Security.Principal;
+using System.Diagnostics.CodeAnalysis;
 using Mf.Mounts.Domain.Runtime;
-using Mono.Unix;
-using SysRuntimeInterop = System.Runtime.InteropServices;
 
 namespace Mf.Mounts.Services;
 
+[SuppressMessage("ReSharper", "ConvertToPrimaryConstructor")]
 public class RuntimeInformationService : IRuntimeInformationService
 {
+	private readonly IRuntimeInformationIO _service;
+
+	public RuntimeInformationService(
+		IRuntimeInformationIO service)
+	{
+		_service = service;
+	}
+	
 	private bool? _isElevatedUser;
 
 	// ReSharper disable once RedundantDefaultMemberInitializer
@@ -14,70 +21,69 @@ public class RuntimeInformationService : IRuntimeInformationService
 
 	public string GetRuntimeIdentifier()
 	{
-		return SysRuntimeInterop.RuntimeInformation.RuntimeIdentifier;
+		return _service.GetRuntimeIdentifier();
 	}
 
 	public string GetFrameworkDescription()
 	{
-		return SysRuntimeInterop.RuntimeInformation.FrameworkDescription;
+		return _service.GetFrameworkDescription();
 	}
 
 	public string GetProcessArchitecture()
 	{
-		return SysRuntimeInterop.RuntimeInformation.ProcessArchitecture.ToString();
+		return _service.GetProcessArchitecture();
 	}
 
 	public string GetOSArchitecture()
 	{
-		return SysRuntimeInterop.RuntimeInformation.OSArchitecture.ToString();
+		return _service.GetOSArchitecture();
 	}
 
 	public string GetOSDescription()
 	{
-		return SysRuntimeInterop.RuntimeInformation.OSDescription;
+		return _service.GetOSDescription();
 	}
 
 	public string GetCurrentDirectory()
 	{
-		return Directory.GetCurrentDirectory();
+		return _service.GetCurrentDirectory();
 	}
 
 	public string GetCommandLine()
 	{
-		return Environment.CommandLine;
+		return _service.GetCommandLine();
 	}
 
 	public string GetMachineName()
 	{
-		return Environment.MachineName;
+		return _service.GetMachineName();
 	}
 
 	public string GetUserName()
 	{
-		return Environment.UserName;
+		return _service.GetUserName();
 	}
 
 	public bool? GetIsElevatedUser()
 	{
-		// ReSharper disable once InvertIf
-		if (!_isElevatedUserGathered)
+		if (_isElevatedUserGathered)
 		{
-			_isElevatedUser = SysRuntimeInterop.RuntimeInformation.IsOSPlatform(SysRuntimeInterop.OSPlatform.Windows)
-				? new WindowsPrincipal(WindowsIdentity.GetCurrent()).IsInRole(WindowsBuiltInRole.Administrator)
-				: SysRuntimeInterop.RuntimeInformation.IsOSPlatform(SysRuntimeInterop.OSPlatform.Linux)
-					? new UnixUserInfo(UnixEnvironment.UserName).UserId == 0
-					: null;
-			_isElevatedUserGathered = true;
+			return _isElevatedUser;
 		}
+
+		_isElevatedUser = _service.GetIsElevatedUser();
+		_isElevatedUserGathered = true;
 
 		return _isElevatedUser;
 	}
 
 	public string GetElevatedUserIndication()
 	{
-		return _isElevatedUser is null
+		bool? isElevatedUser = GetIsElevatedUser();
+
+		return isElevatedUser is null
 			? "unknown if elevated or not"
-			: _isElevatedUser.Value
+			: isElevatedUser.Value
 				? "elevated"
 				: "";
 	}

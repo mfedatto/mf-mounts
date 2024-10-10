@@ -12,7 +12,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mf.Mounts.CrossCutting", "M
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mf.Mounts.Services", "Mf.Mounts.Services\Mf.Mounts.Services.csproj", "{20F97C77-C88F-4ADC-AEC6-C7D73C9B8A0B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mf.Mounts.InputOutput", "Mf.Mounts.InputOutput\Mf.Mounts.InputOutput.csproj", "{8BFB9C3F-E088-4D44-9150-21B584E0C871}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mf.Mounts.IO", "Mf.Mounts.IO\Mf.Mounts.IO.csproj", "{8BFB9C3F-E088-4D44-9150-21B584E0C871}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mf.Mounts.CliTests", "Mf.Mounts.CliTests\Mf.Mounts.CliTests.csproj", "{012B31BD-A51C-41B8-BB74-5F20EEC2E7BD}"
 EndProject

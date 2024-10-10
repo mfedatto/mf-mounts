@@ -7,6 +7,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace Mf.Mounts.Cli.Extensions;
 
+[SuppressMessage("ReSharper", "MemberCanBePrivate.Global")]
 public static class CoconaAppExtensions
 {
 	[RequiresDynamicCode(
@@ -15,35 +16,29 @@ public static class CoconaAppExtensions
 		this CoconaApp app)
 	{
 		return app.ConfigureApp()
-			.AddCommands<Program>();
+			.AddCoconaCommands<Program>();
 	}
 
 	[RequiresDynamicCode(
 		"This method relies on dynamic code generation, which may not be supported in AOT (Ahead-of-Time) or NativeAOT scenarios.")]
 	[SuppressMessage("Trimming",
 		"IL2060:Call to 'System.Reflection.MethodInfo.MakeGenericMethod' can not be statically analyzed. It's not possible to guarantee the availability of requirements of the generic method.")]
-	public static CoconaApp AddCommands<TProgram>(
+	private static CoconaApp AddCoconaCommands<TProgram>(
 		this CoconaApp app)
 		where TProgram : class
 	{
-		string targetNamespace = GetTargetNamespace<TProgram>();
-		MethodInfo addCommandMethod = GetAddCommandMethod();
+		string targetNamespace = GetCommandsBaseNamespaceFromClass<TProgram>();
 
-		foreach (Type commandClass in GetICommandClasses(targetNamespace))
-		{
-			addCommandMethod.MakeGenericMethod(commandClass)
-				.Invoke(null, [app]);
-		}
-
-		return app;
+		return app.AddCoconaCommands(targetNamespace);
 	}
 
 	[UnconditionalSuppressMessage("AOT",
 		"IL3050:Calling members annotated with 'RequiresDynamicCodeAttribute' may break functionality when AOT compiling.",
-		Justification = "<Pending>")]
+		Justification =
+			"This method is only executed in environments that support JIT compilation, and dynamic code is required for its correct functioning.")]
 	[SuppressMessage("Trimming",
 		"IL2060:Call to 'System.Reflection.MethodInfo.MakeGenericMethod' can not be statically analyzed. It's not possible to guarantee the availability of requirements of the generic method.")]
-	public static CoconaApp AddCommands(
+	private static CoconaApp AddCoconaCommands(
 		this CoconaApp app,
 		string targetNamespace)
 	{
@@ -62,7 +57,6 @@ public static class CoconaAppExtensions
 	{
 		MethodInfo addCommandMethod = typeof(CoconaAppExtensions)
 			.GetMethods()
-			// ReSharper disable once ArrangeStaticMemberQualifier
 			.FirstOrDefault(
 				method =>
 					method is
@@ -80,24 +74,33 @@ public static class CoconaAppExtensions
 		return addCommandMethod;
 	}
 
-	public static string GetTargetNamespace<TProgram>()
+	public static string GetCommandsBaseNamespaceFromClass<TProgram>(
+		bool preserveDotCommandEnding = true)
 		where TProgram : class
 	{
 		string? baseNamespace = typeof(TProgram).Namespace;
+		const string dotCommands = ".Commands";
 
 		if (baseNamespace is null)
 		{
 			throw new NullBaseNamespaceException();
 		}
 
-		return $"{baseNamespace}.Commands";
+		if (baseNamespace.EndsWith(dotCommands)
+		    && preserveDotCommandEnding)
+		{
+			return baseNamespace;
+		}
+
+		return $"{baseNamespace}{dotCommands}";
 	}
 
 	[RequiresDynamicCode(
 		"This method relies on dynamic code generation, which may not be supported in AOT (Ahead-of-Time) or NativeAOT scenarios.")]
 	[UnconditionalSuppressMessage("Trimming",
 		"IL2026:Members annotated with 'RequiresUnreferencedCodeAttribute' require dynamic access otherwise can break functionality when trimming application code",
-		Justification = "<Pending>")]
+		Justification =
+			"This method is safe to use even when code trimming occurs because dynamic access is not required in this context.")]
 	public static IEnumerable<Type> GetTargetNamespaceClasses(
 		string targetNamespace)
 	{
@@ -112,7 +115,8 @@ public static class CoconaAppExtensions
 
 	[UnconditionalSuppressMessage("AOT",
 		"IL3050:Calling members annotated with 'RequiresDynamicCodeAttribute' may break functionality when AOT compiling.",
-		Justification = "<Pending>")]
+		Justification =
+			"This method is only executed in environments that support JIT compilation, and dynamic code is required for its correct functioning.")]
 	public static IEnumerable<Type> GetICommandClasses(
 		string targetNamespace)
 	{
@@ -131,7 +135,9 @@ public static class CoconaAppExtensions
 	}
 
 	[SuppressMessage("Trimming",
-		"IL2091:Target generic argument does not satisfy \'DynamicallyAccessedMembersAttribute\' in target method or type. The generic parameter of the source method or type does not have matching annotations.")]
+		"IL2091:Target generic argument does not satisfy 'DynamicallyAccessedMembersAttribute' in target method or type. The generic parameter of the source method or type does not have matching annotations.",
+		Justification =
+			"This method is safe to use even when code trimming occurs because dynamic access is not required in this context.")]
 	public static CoconaApp AddCommand<
 		[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors)]
 		TCommand>(
@@ -142,8 +148,10 @@ public static class CoconaAppExtensions
 	}
 
 	[SuppressMessage("Trimming",
-		"IL2091:Target generic argument does not satisfy \'DynamicallyAccessedMembersAttribute\' in target method or type. The generic parameter of the source method or type does not have matching annotations.")]
-	public static CoconaApp AddCommandInstance<
+		"IL2091:Target generic argument does not satisfy 'DynamicallyAccessedMembersAttribute' in target method or type. The generic parameter of the source method or type does not have matching annotations.",
+		Justification =
+			"This method is safe to use even when code trimming occurs because dynamic access is not required in this context.")]
+	private static CoconaApp AddCommandInstance<
 		[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicProperties)]
 		TCommand>(
 		this CoconaApp app,
@@ -216,14 +224,15 @@ public static class CoconaAppExtensions
 		TCommand>()
 		where TCommand : class
 	{
-		const string shareCommandMethodName = nameof(ICommand<ICommandParameterSet>.Run);
-		MethodInfo? commandMethod = typeof(TCommand).GetMethod(shareCommandMethodName);
+		// ReSharper disable once InconsistentNaming
+		const string commandMethodName = nameof(ICommand<ICommandParameterSet>.Run);
+		MethodInfo? commandMethod = typeof(TCommand).GetMethod(commandMethodName);
 
 		if (commandMethod is null)
 		{
 			throw new CommandDoesNotImplementExpectedMethodException(
 				typeof(TCommand),
-				shareCommandMethodName);
+				commandMethodName);
 		}
 
 		return commandMethod;
@@ -231,9 +240,12 @@ public static class CoconaAppExtensions
 
 	[UnconditionalSuppressMessage("AOT",
 		"IL3050:Calling members annotated with 'RequiresDynamicCodeAttribute' may break functionality when AOT compiling.",
-		Justification = "<Pending>")]
+		Justification =
+			"This method is only executed in environments that support JIT compilation, and dynamic code is required for its correct functioning.")]
 	[SuppressMessage("Trimming",
-		"IL2091:Target generic argument does not satisfy \'DynamicallyAccessedMembersAttribute\' in target method or type. The generic parameter of the source method or type does not have matching annotations.")]
+		"IL2091:Target generic argument does not satisfy 'DynamicallyAccessedMembersAttribute' in target method or type. The generic parameter of the source method or type does not have matching annotations.",
+		Justification =
+			"This method is safe to use even when code trimming occurs because dynamic access is not required in this context.")]
 	public static Delegate CreateCommandDelegate<
 		[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.Interfaces)]
 		TCommand>(

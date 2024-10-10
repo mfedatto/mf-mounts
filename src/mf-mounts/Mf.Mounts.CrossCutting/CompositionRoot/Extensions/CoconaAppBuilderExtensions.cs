@@ -17,6 +17,7 @@ public static class CoconaAppBuilderExtensions
 		builder
 			.BuildContext<DomainContextBuilder>(configuration)
 			.BuildContext<ServicesContextBuilder>(configuration)
+			.BuildContext<IOContextBuilder>(configuration)
 			.BuildContext<CoconaAppContextBuilder>(configuration);
 
 		return builder;
