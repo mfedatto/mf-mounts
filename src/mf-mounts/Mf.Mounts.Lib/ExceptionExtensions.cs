@@ -12,14 +12,14 @@ public static class ExceptionExtensions
 
 		Console.WriteLine();
 		Console.WriteLine(GlobalProperties.ConsoleOutputRuler);
-        
+
 		Console.ForegroundColor = ConsoleColor.Red;
-    
+
 		Console.WriteLine("!! ABORTED !!");
 		Console.WriteLine($"Exception: {ex.Message}");
-    
+
 		Console.ForegroundColor = consoleForegroundColor;
-        
+
 		Console.WriteLine(GlobalProperties.ConsoleOutputRuler);
 		Console.WriteLine(ex.StackTrace);
 		Console.WriteLine(GlobalProperties.ConsoleOutputRuler);

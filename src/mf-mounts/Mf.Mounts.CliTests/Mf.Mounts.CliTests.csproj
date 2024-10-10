@@ -22,7 +22,7 @@
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\Mf.Mounts.Lib\Mf.Mounts.Lib.csproj"/>
+        <ProjectReference Include="..\Mf.Mounts.Cli\Mf.Mounts.Cli.csproj"/>
     </ItemGroup>
 
 </Project>

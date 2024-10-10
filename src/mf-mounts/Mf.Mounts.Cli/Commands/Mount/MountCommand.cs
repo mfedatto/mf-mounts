@@ -8,13 +8,14 @@ namespace Mf.Mounts.Cli.Commands.Mount;
 public class MountCommand : ICommand<MountCommand.ParamSet>
 {
 	private readonly IRuntimeInformationService _service;
-	public string? Name => null;
 
 	public MountCommand(
 		IRuntimeInformationService service)
 	{
 		_service = service;
 	}
+
+	public string? Name => null;
 
 	public void Run(
 		ParamSet options)
@@ -26,7 +27,6 @@ public class MountCommand : ICommand<MountCommand.ParamSet>
 	[SuppressMessage("ReSharper", "NotAccessedPositionalProperty.Global")]
 	public record ParamSet(
 		string MountsFilePath = "mf-mounts.yaml",
-		[Option("skip-checks", ['s'])]
-		bool SkipChecks = false
+		[Option("skip-checks", ['s'])] bool SkipChecks = false
 	) : ICommandParameterSet;
 }

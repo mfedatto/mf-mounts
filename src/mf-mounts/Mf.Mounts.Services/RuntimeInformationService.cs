@@ -1,16 +1,17 @@
 using System.Security.Principal;
+using Mf.Mounts.Domain.Runtime;
 using Mono.Unix;
 using SysRuntimeInterop = System.Runtime.InteropServices;
-using Mf.Mounts.Domain.Runtime;
 
 namespace Mf.Mounts.Services;
 
 public class RuntimeInformationService : IRuntimeInformationService
 {
+	private bool? _isElevatedUser;
+
 	// ReSharper disable once RedundantDefaultMemberInitializer
 	private bool _isElevatedUserGathered = false;
-	private bool? _isElevatedUser;
-	
+
 	public string GetRuntimeIdentifier()
 	{
 		return SysRuntimeInterop.RuntimeInformation.RuntimeIdentifier;

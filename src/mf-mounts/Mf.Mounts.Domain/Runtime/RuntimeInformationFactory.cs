@@ -1,8 +1,8 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Security.Principal;
-using Cocona;
 using Mono.Unix;
 using SysRuntimeInterop = System.Runtime.InteropServices;
+
 // ReSharper disable ConvertToPrimaryConstructor
 
 namespace Mf.Mounts.Domain.Runtime;
@@ -11,13 +11,13 @@ namespace Mf.Mounts.Domain.Runtime;
 public class RuntimeInformationFactory
 {
 	private readonly IRuntimeInformationService _service;
-	
+
 	public RuntimeInformationFactory(
 		IRuntimeInformationService service)
 	{
 		_service = service;
 	}
-	
+
 	public IRuntimeInformation Create()
 	{
 		bool? elevatedUser = SysRuntimeInterop.RuntimeInformation.IsOSPlatform(SysRuntimeInterop.OSPlatform.Windows)
@@ -25,7 +25,7 @@ public class RuntimeInformationFactory
 			: SysRuntimeInterop.RuntimeInformation.IsOSPlatform(SysRuntimeInterop.OSPlatform.Linux)
 				? new UnixUserInfo(UnixEnvironment.UserName).UserId == 0
 				: null;
-		
+
 		return new RuntimeInformationVo
 		{
 			RuntimeIdentifier = _service.GetRuntimeIdentifier(),

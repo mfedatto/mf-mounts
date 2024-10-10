@@ -42,7 +42,7 @@ public static class MfMountsDefinitionsExtensions
 						Vers = child.Vers ?? config.Vers,
 						NoPerm = child.NoPerm ?? config.NoPerm
 					};
-				
+
 				if (child.Children == null)
 				{
 					yield return result;
@@ -50,8 +50,8 @@ public static class MfMountsDefinitionsExtensions
 				else
 				{
 					foreach (MfMountsDefinitions.MountConfig grandChild
-						in (result with { Children = child.Children })
-							.ParseMounts(shareJoiner, mountJoiner))
+					         in (result with { Children = child.Children })
+					         .ParseMounts(shareJoiner, mountJoiner))
 					{
 						yield return grandChild;
 					}

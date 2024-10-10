@@ -14,8 +14,10 @@ public class MfMountsDefinitions
 		public string? DirMode { get; init; }
 		public string? FileMode { get; init; }
 		public string? Vers { get; init; }
+
 		// ReSharper disable once RedundantDefaultMemberInitializer
 		public bool? NoPerm { get; init; } = null;
+
 		// ReSharper disable once RedundantDefaultMemberInitializer
 		public MountConfig[]? Children { get; init; } = null;
 	}

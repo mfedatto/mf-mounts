@@ -6,10 +6,14 @@ namespace Mf.Mounts.Cli.Extensions;
 public class CommandDoesNotImplementExpectedMethodException : Exception
 {
 	public CommandDoesNotImplementExpectedMethodException()
-		: base("Command type does not contain the expected method") { }
+		: base("Command type does not contain the expected method")
+	{
+	}
 
 	public CommandDoesNotImplementExpectedMethodException(
 		Type commandType,
 		string commandMethodName)
-		: base($"{commandType.Name} does not contain the method '{commandMethodName}'.") { }
+		: base($"{commandType.Name} does not contain the method '{commandMethodName}'.")
+	{
+	}
 }

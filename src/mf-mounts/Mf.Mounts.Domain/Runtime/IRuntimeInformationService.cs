@@ -8,8 +8,10 @@ public interface IRuntimeInformationService
 	string GetRuntimeIdentifier();
 	string GetFrameworkDescription();
 	string GetProcessArchitecture();
+
 	// ReSharper disable once InconsistentNaming
 	string GetOSArchitecture();
+
 	// ReSharper disable once InconsistentNaming
 	string GetOSDescription();
 	string GetCurrentDirectory();

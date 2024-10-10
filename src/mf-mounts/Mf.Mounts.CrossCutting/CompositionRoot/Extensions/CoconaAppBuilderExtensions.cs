@@ -64,7 +64,7 @@ public static class CoconaAppBuilderExtensions
 
 		configuration.GetSection(configurator.Section)
 			.Bind(configurator);
-        
+
 		builder.Services.AddSingleton(configurator);
 
 		return builder;

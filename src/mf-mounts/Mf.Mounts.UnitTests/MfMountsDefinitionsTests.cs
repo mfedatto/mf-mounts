@@ -81,7 +81,7 @@ public class Tests
 			};
 
 		// Act
-		MfMountsDefinitions.MountConfig[] actual = 
+		MfMountsDefinitions.MountConfig[] actual =
 			mfMountsDefinitions.ParseMounts()
 				.ToArray();
 
@@ -713,7 +713,7 @@ public class Tests
 							{
 								Share = shareFolder1,
 								MountPoint = mountFolder1,
-								Children = 
+								Children =
 								[
 									new()
 									{
@@ -734,7 +734,7 @@ public class Tests
 							{
 								Share = shareFolder2,
 								MountPoint = mountFolder2,
-								Children = 
+								Children =
 								[
 									new()
 									{
@@ -814,13 +814,13 @@ public class Tests
 							{
 								Share = shareFolder1,
 								MountPoint = mountFolder1,
-								Children = 
+								Children =
 								[
 									new()
 									{
 										Share = shareFolder3,
 										MountPoint = mountFolder3,
-										Children = 
+										Children =
 										[
 											new()
 											{
@@ -843,13 +843,13 @@ public class Tests
 							{
 								Share = shareFolder2,
 								MountPoint = mountFolder2,
-								Children = 
+								Children =
 								[
 									new()
 									{
 										Share = shareFolder4,
 										MountPoint = mountFolder4,
-										Children = 
+										Children =
 										[
 											new()
 											{
@@ -877,13 +877,17 @@ public class Tests
 		[
 			new()
 			{
-				Share = shareHost1 + shareJoiner + shareFolder1 + shareJoiner + shareFolder3 + shareJoiner + shareFolder5,
-				MountPoint = mountPrefix1 + mountJoiner + mountFolder1 + mountJoiner + mountFolder3 + mountJoiner + mountFolder5
+				Share = shareHost1 + shareJoiner + shareFolder1 + shareJoiner + shareFolder3 + shareJoiner +
+				        shareFolder5,
+				MountPoint = mountPrefix1 + mountJoiner + mountFolder1 + mountJoiner + mountFolder3 + mountJoiner +
+				             mountFolder5
 			},
 			new()
 			{
-				Share = shareHost2 + shareJoiner + shareFolder2 + shareJoiner + shareFolder4 + shareJoiner + shareFolder6,
-				MountPoint = mountPrefix2 + mountJoiner + mountFolder2 + mountJoiner + mountFolder4 + mountJoiner + mountFolder6
+				Share = shareHost2 + shareJoiner + shareFolder2 + shareJoiner + shareFolder4 + shareJoiner +
+				        shareFolder6,
+				MountPoint = mountPrefix2 + mountJoiner + mountFolder2 + mountJoiner + mountFolder4 + mountJoiner +
+				             mountFolder6
 			}
 		];
 
@@ -927,13 +931,13 @@ public class Tests
 							{
 								Share = shareFolder1,
 								MountPoint = mountFolder1,
-								Children = 
+								Children =
 								[
 									new()
 									{
 										Share = shareFolder3,
 										MountPoint = mountFolder3,
-										Children = 
+										Children =
 										[
 											new()
 											{
@@ -974,8 +978,10 @@ public class Tests
 		[
 			new()
 			{
-				Share = shareHost1 + shareJoiner + shareFolder1 + shareJoiner + shareFolder3 + shareJoiner + shareFolder5,
-				MountPoint = mountPrefix1 + mountJoiner + mountFolder1 + mountJoiner + mountFolder3 + mountJoiner + mountFolder5
+				Share = shareHost1 + shareJoiner + shareFolder1 + shareJoiner + shareFolder3 + shareJoiner +
+				        shareFolder5,
+				MountPoint = mountPrefix1 + mountJoiner + mountFolder1 + mountJoiner + mountFolder3 + mountJoiner +
+				             mountFolder5
 			},
 			new()
 			{
