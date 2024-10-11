@@ -22,7 +22,7 @@ public class MountCommand : ICommand<MountCommand.ParamSet>
 		ParamSet options)
 	{
 		Console.WriteLine($"Input: {options.MountsFilePath}");
-		Console.WriteLine($"Command line: {_runtimeInfoService.GetCommandLine()}");
+		Console.WriteLine($"Command line: {_runtimeInfoService.GetRuntimeInformation().CommandLine}");
 	}
 
 	[SuppressMessage("ReSharper", "NotAccessedPositionalProperty.Global")]

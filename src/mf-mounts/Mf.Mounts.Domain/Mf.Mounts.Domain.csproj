@@ -11,8 +11,4 @@
         <PackageReference Include="Mono.Posix.NETStandard" Version="1.0.0"/>
     </ItemGroup>
 
-    <ItemGroup>
-      <Folder Include="MountDefinitions\" />
-    </ItemGroup>
-
 </Project>
