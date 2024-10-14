@@ -8,7 +8,7 @@
 
     <ItemGroup>
         <PackageReference Include="Cocona.Core" Version="2.2.0"/>
-        <PackageReference Include="Mono.Posix.NETStandard" Version="1.0.0"/>
+        <PackageReference Include="YamlDotNet" Version="16.1.3" />
     </ItemGroup>
 
 </Project>

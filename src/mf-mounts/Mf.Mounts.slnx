@@ -2,9 +2,9 @@
   <Project Path="Mf.Mounts.CliTests\Mf.Mounts.CliTests.csproj" Type="Classic C#" />
   <Project Path="Mf.Mounts.Cli\Mf.Mounts.Cli.csproj" Type="Classic C#" />
   <Project Path="Mf.Mounts.CrossCutting\Mf.Mounts.CrossCutting.csproj" Type="Classic C#" />
+  <Project Path="Mf.Mounts.DomainTests\Mf.Mounts.DomainTests.csproj" Type="Classic C#" />
   <Project Path="Mf.Mounts.Domain\Mf.Mounts.Domain.csproj" Type="Classic C#" />
   <Project Path="Mf.Mounts.IO\Mf.Mounts.IO.csproj" Type="Classic C#" />
   <Project Path="Mf.Mounts.Lib\Mf.Mounts.Lib.csproj" Type="Classic C#" />
   <Project Path="Mf.Mounts.Services\Mf.Mounts.Services.csproj" Type="Classic C#" />
-  <Project Path="Mf.Mounts.UnitTests\Mf.Mounts.UnitTests.csproj" Type="Classic C#" />
 </Solution>

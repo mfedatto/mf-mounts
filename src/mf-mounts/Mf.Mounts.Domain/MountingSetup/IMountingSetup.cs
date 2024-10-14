@@ -1,4 +1,4 @@
-namespace Mf.Mounts.Domain.Mounting;
+namespace Mf.Mounts.Domain.MountingSetup;
 
 public interface IMountingSetup
 {
